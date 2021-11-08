@@ -118,6 +118,7 @@ async function getDailyForecast(lat, lon) {
           <p>${day.weather[0].description}</p>
         </div>
         `
+
     });
   } catch (error) {
     console.log(error);
@@ -160,4 +161,5 @@ function showDay(timestamp) {
 // 3. Show error message is wrong city is not found
 // 4. add details containing cloud icons to daily weather forecast
 // 5. Add day details for corresponding days.
-// 6.
+// 6. Create an icons folder
+// 7. add background image.
