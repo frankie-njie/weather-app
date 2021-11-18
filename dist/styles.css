@@ -1,0 +1,14 @@
+body {}
+
+.daily {
+  display: flex;
+  justify-content: space-between;
+}
+.details-extra {
+  width:  30%;
+}
+.details-more{
+  display: flex;
+  justify-content: space-between;
+
+}

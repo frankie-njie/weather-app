@@ -8,7 +8,7 @@ const searchBtn = document.getElementById("search");
 window.addEventListener("load", getDefaultWeather);
 searchBtn.addEventListener("click", searchCity);
 
-async function getDefaultWeather(location) {
+async function getDefaultWeather() {
   let url =
     "https://api.openweathermap.org/data/2.5/weather?q=douala&units=metric&appid=ff29776d47fbae9020ce171caf42de56";
   let date = new Date().toGMTString();
@@ -24,19 +24,22 @@ async function getDefaultWeather(location) {
     .then((data) => {
       console.log(data);
       // let date = new Date(data.dt)
-      displayCityInfo.innerHTML = ` <div>
+      displayCityInfo.innerHTML = ` <div class="city-details">
+        <div>
         <h2>${data.name}, ${data.sys.country}</h2>
         <h1>${data.main.temp}</h1>
+        </div>
         <div>
           <p>${data.weather[0].description}</p>
+          <p>${date}</p>
         </div>
-        <p>${date}</p>
-        <div>
-        <div>
-            <p>Feels Like</p><h4>${data.main.feels_like}</h4>
-            <p>Wind Speed</p><h4>${data.wind.speed}</h4>
-            <p>Humidity</p><h4>${data.main.humidity}</h4>
-            <p>Pressure</p><h4>${data.main.pressure}</h4>
+        
+     
+        <div class="details-extra">
+            <div class="details-more"><p>Feels Like</p><h4>${data.main.feels_like}</h4></div>
+            <div class="details-more"><p>Wind Speed</p><h4>${data.wind.speed}</h4></div>
+            <div class="details-more"><p>Humidity</p><h4>${data.main.humidity}</h4></div>
+            <div class="details-more"><p>Pressure</p><h4>${data.main.pressure}</h4></div>
         </div>
 
       </div>
@@ -64,28 +67,29 @@ async function searchCity() {
     .then((response) => {
       if (response.ok) {
         return response;
-      } 
+      }
       if (response.status === 404) {
         console.log("city not found");
-        searchBtn.nextElementSibling.innerHTML = `<h3>City is not found</h3>`
+        searchBtn.nextElementSibling.innerHTML = `<h3>City is not found</h3>`;
       }
       throw console.log(err);
     })
     .then((response) => response.json())
     .then((data) => {
-      displayCityInfo.innerHTML = `<div>
+      displayCityInfo.innerHTML = `<div class="city-details">
           <h2>${data.name}, ${data.sys.country}</h2>
           <h1>${data.main.temp}</h1>
           <div>
           <p>${data.weather[0].description}</p>
-          </div>
           <p>${date}</p>
-          <div>
-            <p>Feels Like</p><h4>${data.main.feels_like}</h4>
-            <p>Wind Speed</p><h4>${data.wind.speed}</h4>
-            <p>Humidity</p><h4>${data.main.humidity}</h4>
-            <p>Pressure</p><h4>${data.main.pressure}</h4>
-        </div>
+          </div>
+         
+          <div class="details-extra">
+              <div class="details-more"><p>Feels Like</p><h4>${data.main.feels_like}</h4></div>
+              <div class="details-more"><p>Wind Speed</p><h4>${data.wind.speed}</h4></div>
+              <div class="details-more"><p>Humidity</p><h4>${data.main.humidity}</h4></div>
+              <div class="details-more"><p>Pressure</p><h4>${data.main.pressure}</h4></div>
+          </div>
       </div>
     `;
       let cityLong = data.coord.lon;
@@ -112,13 +116,12 @@ async function getDailyForecast(lat, lon) {
       let dayToday = showDay(i);
       console.log(dayToday);
       dailyForecast.innerHTML += `
-        <div>
+        <div class="main-details">
           <h4>${dayToday}</h4>
           <h4>${day.temp.day}</h4>
           <p>${day.weather[0].description}</p>
         </div>
-        `
-
+        `;
     });
   } catch (error) {
     console.log(error);
@@ -158,7 +161,7 @@ function showDay(timestamp) {
 // 2. Function that would display fetched weather data
 // - Fetch whether data with default city.
 // - Display fetched data on screen
-// 3. Show error message is wrong city is not found
+// 3. Show error message if city is not found
 // 4. add details containing cloud icons to daily weather forecast
 // 5. Add day details for corresponding days.
 // 6. Create an icons folder
