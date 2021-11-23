@@ -26,21 +26,33 @@ async function getDefaultWeather() {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      displayCityInfo.innerHTML = `<div class="city-details">
-        <div>
-          <p>${data.current.condition.text}</p>
+      displayCityInfo.innerHTML = `<div class="city-div">
+        <div class="city-details">
+          <p class="city-condition">${data.current.condition.text}</p>
           <h2>${data.location.name}, ${data.location.country}</h2>
           <h1>${data.current.temp_c}</h1>
+          <div>
+            <p class="date">${date}</p>
+          </div>
         </div>
-        <div>
-          <p>${date}</p>
-        </div>
-        
+
         <div class="details-extra">
-          <div class="details-more"><p>Feels Like</p><h4>${data.current.feelslike_c}</h4></div>
-          <div class="details-more"><p>Wind Speed</p><h4>${data.current.wind_kph}</h4></div>
-          <div class="details-more"><p>Humidity</p><h4>${data.current.humidity}</h4></div>
-          <div class="details-more"><p>Wind Direction</p><h4>${data.current.wind_dir}</h4></div>
+          <div class="details-more">
+            <p class="p-details">Feels Like</p>
+            <h4>${data.current.feelslike_c}</h4>
+          </div>
+          <div class="details-more">
+            <p class="p-details">Wind Speed</p>
+            <h4>${data.current.wind_kph}</h4>
+          </div>
+          <div class="details-more">
+            <p class="p-details">Humidity</p>
+            <h4>${data.current.humidity}</h4>
+          </div>
+          <div class="details-more">
+            <p class="p-details">Wind Direction</p>
+            <h4>${data.current.wind_dir}</h4>
+          </div>
         </div>
       </div>
       `;
@@ -55,7 +67,7 @@ async function searchCity() {
   let searchInput = document.querySelector("input");
   // searchInput.value === "" ? alert("Enter a City") : searchInput.value;
   if (searchInput.value === "") {
-    searchBtn.nextElementSibling.innerHTML = `<h3>Enter a City</h3>`;
+    searchBtn.nextElementSibling.innerHTML = `<p class="error-popup" >Enter a City</p>`;
     // alert("Enter a City")
   } else {
     let searchUrl = `https://api.weatherapi.com/v1/forecast.json?key=${urlApikey}&q=${searchInput.value}&days=1&aqi=no&alerts=no`;
@@ -69,27 +81,40 @@ async function searchCity() {
         }
         if (response.status === 400 || response.status === 404) {
           console.log("city not found");
-          searchBtn.nextElementSibling.innerHTML = `<h3>City is not found</h3>`;
+          searchBtn.nextElementSibling.innerHTML = `
+          <p class="error-popup">City not found</p>`;
         }
         throw console.log(err);
       })
       .then((response) => response.json())
       .then((data) => {
-        displayCityInfo.innerHTML = `<div class="city-details">
-        <div>
-          <p>${data.current.condition.text}</p>
+        displayCityInfo.innerHTML = `<div class="city-div">
+        <div class="city-details">
+          <p class="city-condition">${data.current.condition.text}</p>
           <h2>${data.location.name}, ${data.location.country}</h2>
           <h1>${data.current.temp_c}</h1>
+          <div>
+            <p class="date">${date}</p>
+          </div>
         </div>
-        <div>
-          <p>${date}</p>
-        </div>
-        
+
         <div class="details-extra">
-          <div class="details-more"><p>Feels Like</p><h4>${data.current.feelslike_c}</h4></div>
-          <div class="details-more"><p>Wind Speed</p><h4>${data.current.wind_kph}</h4></div>
-          <div class="details-more"><p>Humidity</p><h4>${data.current.humidity}</h4></div>
-          <div class="details-more"><p>Wind Direction</p><h4>${data.current.wind_dir}</h4></div>
+          <div class="details-more">
+            <p class="p-details">Feels Like</p>
+            <h4>${data.current.feelslike_c}</h4>
+          </div>
+          <div class="details-more">
+            <p class="p-details">Wind Speed</p>
+            <h4>${data.current.wind_kph}</h4>
+          </div>
+          <div class="details-more">
+            <p class="p-details">Humidity</p>
+            <h4>${data.current.humidity}</h4>
+          </div>
+          <div class="details-more">
+            <p class="p-details">Wind Direction</p>
+            <h4>${data.current.wind_dir}</h4>
+          </div>
         </div>
       </div>
       `;
@@ -103,7 +128,7 @@ async function searchCity() {
 }
 
 async function getDailyForecast(lat, lon) {
-  let dayUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=ff29776d47fbae9020ce171caf42de56`;
+  let dayUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${urlKey}`;
 
   console.log(dayUrl);
 
@@ -116,14 +141,16 @@ async function getDailyForecast(lat, lon) {
     forecastDay.forEach((day, i) => {
       // console.log(i);
       let dayToday = showDay(i);
-      let iconSrc = getIcon(day.weather[0].icon)
+      let iconSrc = getIcon(day.weather[0].icon);
       console.log(dayToday);
       dailyForecast.innerHTML += `
         <div class="main-details">
-          <h4>${dayToday}</h4>
-          <h4>${day.temp.day}</h4>
+          <p class="week-day">${dayToday}</p>
+          <div>
+          <h4 class="week-temp">${day.temp.day}</h4>
           <p>${day.weather[0].description}</p>
           <img src=${iconSrc} width="60px">
+          </div>
         </div>
         `;
     });
@@ -191,18 +218,17 @@ function getIcon(code) {
       break;
 
     case "13d" || "13n":
-      icon = "img/icons/snowflakes.svg";
+      icon = "img/icons/snowflake.svg";
       break;
 
     case "50d" || "50n":
       icon = "img/icons/mist.svg";
       break;
     default:
-      icon = "img/icons/night.svg"  
+      icon = "img/icons/night.svg";
       break;
   }
-  return icon
-
+  return icon;
 }
 
 // Todo
