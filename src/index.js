@@ -5,7 +5,7 @@ const cityName = document.getElementById("cityName");
 const searchBtn = document.getElementById("search");
 let urlKey = "ff29776d47fbae9020ce171caf42de56";
 let urlApikey = "5266f3bdb4ea4bd6bc4211452211811";
-
+let tempUnit = '°C'
 //event listeners
 window.addEventListener("load", getDefaultWeather);
 searchBtn.addEventListener("click", searchCity);
@@ -30,7 +30,7 @@ async function getDefaultWeather() {
         <div class="city-details">
           <p class="city-condition">${data.current.condition.text}</p>
           <h2>${data.location.name}, ${data.location.country}</h2>
-          <h1>${data.current.temp_c}</h1>
+          <h1>${data.current.temp_c} <sup>${tempUnit}</sup></h1>
           <div>
             <p class="date">${date}</p>
           </div>
@@ -39,15 +39,15 @@ async function getDefaultWeather() {
         <div class="details-extra">
           <div class="details-more">
             <p class="p-details">Feels Like</p>
-            <h4>${data.current.feelslike_c}</h4>
+            <h4>${data.current.feelslike_c} ${tempUnit}</h4>
           </div>
           <div class="details-more">
             <p class="p-details">Wind Speed</p>
-            <h4>${data.current.wind_kph}</h4>
+            <h4>${data.current.wind_kph} Km/h</h4>
           </div>
           <div class="details-more">
             <p class="p-details">Humidity</p>
-            <h4>${data.current.humidity}</h4>
+            <h4>${data.current.humidity} %</h4>
           </div>
           <div class="details-more">
             <p class="p-details">Wind Direction</p>
@@ -68,7 +68,7 @@ async function searchCity() {
   // searchInput.value === "" ? alert("Enter a City") : searchInput.value;
   if (searchInput.value === "") {
     searchBtn.nextElementSibling.innerHTML = `<p class="error-popup" >Enter a City</p>`;
-    // alert("Enter a City")
+
   } else {
     let searchUrl = `https://api.weatherapi.com/v1/forecast.json?key=${urlApikey}&q=${searchInput.value}&days=1&aqi=no&alerts=no`;
     let date = new Date().toGMTString();
@@ -88,11 +88,20 @@ async function searchCity() {
       })
       .then((response) => response.json())
       .then((data) => {
+        let countryInfo = data.location.country
+        console.log(countryInfo);
+        if (countryInfo === 'United States of America') {
+          countryInfo = data.location.region;
+        } else {
+          countryInfo = data.location.country
+        }
+        console.log(countryInfo);
+        console.log();
         displayCityInfo.innerHTML = `<div class="city-div">
         <div class="city-details">
           <p class="city-condition">${data.current.condition.text}</p>
-          <h2>${data.location.name}, ${data.location.country}</h2>
-          <h1>${data.current.temp_c}</h1>
+          <h2>${data.location.name}, ${countryInfo}</h2>
+          <h1>${data.current.temp_c} <sup>${tempUnit}</sup></h1>
           <div>
             <p class="date">${date}</p>
           </div>
@@ -101,15 +110,15 @@ async function searchCity() {
         <div class="details-extra">
           <div class="details-more">
             <p class="p-details">Feels Like</p>
-            <h4>${data.current.feelslike_c}</h4>
+            <h4>${data.current.feelslike_c} ${tempUnit}</h4>
           </div>
           <div class="details-more">
             <p class="p-details">Wind Speed</p>
-            <h4>${data.current.wind_kph}</h4>
+            <h4>${data.current.wind_kph} Km/h</h4>
           </div>
           <div class="details-more">
             <p class="p-details">Humidity</p>
-            <h4>${data.current.humidity}</h4>
+            <h4>${data.current.humidity} %</h4>
           </div>
           <div class="details-more">
             <p class="p-details">Wind Direction</p>
@@ -130,26 +139,24 @@ async function searchCity() {
 async function getDailyForecast(lat, lon) {
   let dayUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${urlKey}`;
 
-  console.log(dayUrl);
-
   try {
     let response = await fetch(dayUrl);
     let dailyData = await response.json();
-    console.log(dailyData);
+    // console.log(dailyData);
     let forecastDay = dailyData.daily;
     dailyForecast.innerHTML = "";
     forecastDay.forEach((day, i) => {
       // console.log(i);
       let dayToday = showDay(i);
       let iconSrc = getIcon(day.weather[0].icon);
-      console.log(dayToday);
+      // console.log(dayToday);
       dailyForecast.innerHTML += `
         <div class="main-details">
           <p class="week-day">${dayToday}</p>
-          <div>
-          <h4 class="week-temp">${day.temp.day}</h4>
-          <p>${day.weather[0].description}</p>
-          <img src=${iconSrc} width="60px">
+          <div class="week-details">
+            <h4 class="week-temp">${day.temp.day} ${tempUnit}</h4>
+            <p>${day.weather[0].description}</p>
+            <img src=${iconSrc} class="icon" >
           </div>
         </div>
         `;
@@ -242,3 +249,6 @@ function getIcon(code) {
 // 6. Create an icons folder
 // 7. Match icons to corresponding icon codes.
 // 8. add background image.
+// 9. Add units to corresponding values e.g celcuis, windspeed, humidity 
+// 10. Add transition effect for fetched data.
+// 11. Do mobile designs for teh UI 
