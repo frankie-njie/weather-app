@@ -5,31 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather.city</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500&family=Montserrat:wght@400;500;600&family=Prompt:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
     <nav>
-        <h1>Weather.city</h1>
+        <h3>Weather.city</h3>
     </nav>
+    <div id="searchCity" class="search-city">
+      <input type="search" placeholder="Search City...">
+      <button id="search"><img src="img/icons/search.svg" class="search-icon" alt="search icon"></button>
+      <div class="error"></div>
+    </div>
     <div id="cityDetails" class="city-details">
-        <h1 id="cityName">City,<span>Country</span></h1>
-        <p>Monday, 1st November 2021</p>
-        <h3>23</h3>
         <p>cloudy</p>
+        <h2 id="cityName">City,<span>Country</span></h2>
+        <h1>23</h1>
+        <p>Monday, 1st November 2021</p>
+  
+        
         <div>
             <p>Feels like</p>
             <p>wind speed</p>
             <p>Humidity</p>
         </div>
     </div>
-    <div id="searchCity" class="search-city">
-        <input type="search">
-        <button id="search">search</button>
-        <div></div>
-    </div>
     <div id="dailyForecast" class="daily">
+      <h4>Daily</h4>
     </div>
 
     <script src="main.js"></script>
