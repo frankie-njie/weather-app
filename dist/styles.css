@@ -171,7 +171,7 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 }
 
 .fade-in {
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1s;
 }
 
 @media (max-width: 600px) {
