@@ -1,5 +1,6 @@
 const displayCityInfo = document.getElementById("cityDetails");
 const searchCityDiv = document.getElementById("searchCity");
+const input = document.getElementById("input")
 const dailyForecast = document.getElementById("dailyForecast");
 const cityName = document.getElementById("cityName");
 const searchBtn = document.getElementById("search");
@@ -9,6 +10,15 @@ let tempUnit = '°C'
 //event listeners
 window.addEventListener("load", getDefaultWeather);
 searchBtn.addEventListener("click", searchCity);
+input.addEventListener("keypress", (e)=>{
+  if (e.key === 'Enter') {
+    // Cancel the default action, if needed
+    e.preventDefault();
+    // Trigger the button element with a click
+    searchCity();
+  }
+})
+
 
 async function getDefaultWeather() {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=douala&units=metric&appid=${urlKey}`;
@@ -26,7 +36,7 @@ async function getDefaultWeather() {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      displayCityInfo.innerHTML = `<div class="city-div">
+      displayCityInfo.innerHTML = `<div class="city-div fade-in">
         <div class="city-details">
           <p class="city-condition">${data.current.condition.text}</p>
           <h2>${data.location.name}, ${data.location.country}</h2>
@@ -89,15 +99,12 @@ async function searchCity() {
       .then((response) => response.json())
       .then((data) => {
         let countryInfo = data.location.country
-        console.log(countryInfo);
         if (countryInfo === 'United States of America') {
           countryInfo = data.location.region;
         } else {
           countryInfo = data.location.country
         }
-        console.log(countryInfo);
-        console.log();
-        displayCityInfo.innerHTML = `<div class="city-div">
+        displayCityInfo.innerHTML = `<div class="city-div fade-in">
         <div class="city-details">
           <p class="city-condition">${data.current.condition.text}</p>
           <h2>${data.location.name}, ${countryInfo}</h2>
@@ -151,7 +158,7 @@ async function getDailyForecast(lat, lon) {
       let iconSrc = getIcon(day.weather[0].icon);
       // console.log(dayToday);
       dailyForecast.innerHTML += `
-        <div class="main-details">
+        <div class="main-details fade-in">
           <p class="week-day">${dayToday}</p>
           <div class="week-details">
             <h4 class="week-temp">${day.temp.day} ${tempUnit}</h4>
@@ -237,6 +244,7 @@ function getIcon(code) {
   }
   return icon;
 }
+
 
 // Todo
 // 1. Fetch whether data on load..
