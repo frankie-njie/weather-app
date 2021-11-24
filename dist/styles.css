@@ -199,7 +199,7 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   }
 
   button {
-    left: 90%;
+    left: 88%;
     top: -42px;
   }
 
@@ -242,7 +242,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   .week-day{
     font-size: 18px;
   }
+
+  .week-temp + p{
+    font-size: 16px;
+  }
   .icon{
-    width: 40px; 
+    width: 35px; 
   }
 }
