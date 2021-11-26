@@ -51,7 +51,7 @@ button>img {
   height: 30px;
 }
 
-sup{
+sup {
   font-size: 3rem;
 }
 
@@ -146,10 +146,11 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
   border-style: solid;
   border-color: #fff transparent transparent transparent;
 }
-.daily-div{
+
+.daily-div {
   position: absolute;
   width: 90%;
-  bottom: 8%; 
+  bottom: 8%;
 }
 
 .daily {
@@ -166,8 +167,9 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 .week-temp {
   font-size: 18px;
 }
+
 .icon {
-  width : 60px;
+  width: 60px;
 }
 
 .fade-in {
@@ -175,78 +177,74 @@ input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-s
 }
 
 @media (max-width: 600px) {
-  body{
+  body {
     margin: 4%;
     overflow: auto;
   }
-  h1{
+  h1 {
     font-size: 4rem;
   }
-  h2{
+  h2 {
     font-size: 2rem;
   }
   h4 {
     font-size: 1.2rem;
   }
-
-  sup{
+  sup {
     font-size: 1.5rem;
   }
-
   input[type="search"] {
     position: initial;
     width: 100%;
   }
-
   button {
     left: 88%;
     top: -42px;
   }
-
-  .city-div{
+  .city-div {
     display: block;
   }
-  .city-condition{
+  .city-condition {
     font-size: 1rem;
   }
-  .date{
+  .error {
+    top: -65px;
+  }
+  .date {
     font-size: 16px;
     font-weight: 400;
   }
   .p-details {
     font-size: 16px;
   }
-  .details-extra{
+  .details-extra {
     width: 100%;
     margin: 2rem 0;
   }
-
-  .daily-div{
+  .daily-div {
     position: initial;
     width: 100%;
   }
-
-  .daily{
+  .daily {
     display: block;
   }
-  .main-details{
+  .main-details {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .week-details{
+  .week-details {
     display: flex;
     align-items: center;
     gap: 15px;
   }
-  .week-day{
+  .week-day {
     font-size: 18px;
   }
-
-  .week-temp + p{
+  .week-temp+p {
     font-size: 16px;
   }
-  .icon{
-    width: 35px; 
+  .icon {
+    width: 35px;
   }
 }

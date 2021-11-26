@@ -260,3 +260,4 @@ function getIcon(code) {
 // 9. Add units to corresponding values e.g celcuis, windspeed, humidity 
 // 10. Add transition effect for fetched data.
 // 11. Do mobile designs for teh UI 
+// 12. Add a loader to the site before the fetched data returns.
